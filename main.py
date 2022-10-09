@@ -22,17 +22,16 @@ HEADERS = {
 responce = requests.get('https://habr.com/ru/all/', headers= HEADERS)
 text = responce.text
 
-KEYWORDS = {'дизайн', 'фото', 'web', 'python', 'интервью'}
+KEYWORDS = {'дизайн', 'фото', 'web', 'python', 'интервью','Копирайт','Искусственный интеллект'}
 
 soup = bs4.BeautifulSoup(text, features='html.parser')
 articles = soup.find_all(class_='tm-article-snippet')
 for artical in articles:
     hubs = artical.find_all(class_ = 'tm-article-snippet__hubs-item')
     hubs = {hub.find('a').text.strip() for hub in hubs}
-    if hubs and KEYWORDS:
+    if hubs & KEYWORDS:
         data_tag_title = artical.find('time')
         artical_tag_a = artical.find('h2').find('a')
         href = artical_tag_a.attrs['href']
         url = 'https://habr.com' + href
-        print(data_tag_title.text, artical_tag_a.text, '---->', url)
-        print('---->')
+        print(data_tag_title.text, '--->', artical_tag_a.text, '---->', url)
